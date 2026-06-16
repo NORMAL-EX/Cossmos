@@ -70,7 +70,7 @@ jobs:
       - name: Run once mode and verify status.json
         run: |
           go build -o cossmos .
-          ./cossmos -mode once -config config.demo.yaml -out web/dist -data data/history.json
+          ./cossmos -mode once -config config.yaml -out web/dist -data data/history.json
           test -f web/dist/status.json
           node -e "const s=require('./web/dist/status.json'); if(!Array.isArray(s.services)||!s.services.length){console.error('no services');process.exit(1)} console.log('services:',s.services.length,'overall:',s.overall)"
 

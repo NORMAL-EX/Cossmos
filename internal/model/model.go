@@ -46,7 +46,8 @@ type Service struct {
 type SiteInfo struct {
 	Title           string `json:"title" yaml:"title"`
 	Description     string `json:"description,omitempty" yaml:"description"`
-	Logo            string `json:"logo,omitempty" yaml:"logo"`
+	Logo            string `json:"logo,omitempty" yaml:"logo"`         // logo URL or data URI
+	LogoDark        string `json:"logoDark,omitempty" yaml:"logoDark"` // dark-mode logo variant
 	ICP             string `json:"icp,omitempty" yaml:"icp"`               // ICP 备案号
 	ICPLink         string `json:"icpLink,omitempty" yaml:"icpLink"`       // 工信部备案查询链接
 	PoliceICP       string `json:"policeIcp,omitempty" yaml:"policeIcp"`   // 公安备案号

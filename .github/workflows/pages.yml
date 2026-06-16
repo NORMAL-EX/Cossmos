@@ -14,7 +14,7 @@ on:
       - "web/**"
       - "internal/**"
       - "main.go"
-      - "config.demo.yaml"
+      - "config.yaml"
       - ".github/workflows/pages.yml"
 
 permissions:
@@ -64,7 +64,7 @@ jobs:
       - name: Run checks (once mode) → status.json
         run: |
           go build -trimpath -ldflags "-s -w -X main.version=pages-${{ github.run_number }}" -o cossmos .
-          ./cossmos -mode once -config config.demo.yaml -out web/dist -data data/history.json
+          ./cossmos -mode once -config config.yaml -out web/dist -data data/history.json
           touch web/dist/.nojekyll
 
       - name: Upload Pages artifact

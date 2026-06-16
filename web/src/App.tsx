@@ -54,6 +54,19 @@ export default function App() {
     if (data?.site.title) document.title = data.site.title;
   }, [data?.site.title]);
 
+  // Use the configured logo as the favicon when provided.
+  React.useEffect(() => {
+    const logo = data?.site.logo;
+    if (!logo) return;
+    let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
+    link.href = logo;
+  }, [data?.site.logo]);
+
   const filtered = React.useMemo(() => {
     if (!data) return [];
     const q = query.trim().toLowerCase();
@@ -75,7 +88,12 @@ export default function App() {
     <div className="relative flex min-h-dvh flex-col">
       <div className="cossmos-aurora pointer-events-none absolute inset-x-0 top-0 h-64" />
 
-      <Navbar title={data?.site.title ?? "Cossmos"} github={data?.site.github} />
+      <Navbar
+        title={data?.site.title ?? "Cossmos"}
+        github={data?.site.github}
+        logo={data?.site.logo}
+        logoDark={data?.site.logoDark}
+      />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
         {loading ? (

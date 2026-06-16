@@ -32,6 +32,7 @@ export interface SiteInfo {
   title: string;
   description?: string;
   logo?: string;
+  logoDark?: string;
   icp?: string;
   icpLink?: string;
   policeIcp?: string;

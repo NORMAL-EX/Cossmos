@@ -26,7 +26,7 @@ RUN apk add --no-cache ca-certificates tzdata wget \
     && mkdir -p /app/data && chown -R cossmos:cossmos /app
 WORKDIR /app
 COPY --from=build /out/cossmos /usr/local/bin/cossmos
-COPY config.demo.yaml /app/config.yaml
+COPY config.yaml /app/config.yaml
 USER cossmos
 EXPOSE 8080
 ENV COSSMOS_MODE=serve \

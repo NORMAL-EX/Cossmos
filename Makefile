@@ -23,7 +23,7 @@ run: build
 
 ## once: build and run a single round, writing status.json to ./public
 once: build-go
-	./$(BIN) -mode once -config config.demo.yaml -out public
+	./$(BIN) -mode once -config config.yaml -out public
 
 ## test: run Go tests and the frontend typecheck
 test:
