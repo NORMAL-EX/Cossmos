@@ -31,14 +31,9 @@ export function Navbar({ title, github, logo, logoDark }: NavbarProps) {
               <Activity className="size-5" />
             </span>
           )}
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold leading-tight sm:text-base">
-              {title}
-            </p>
-            <p className="text-[11px] leading-tight text-muted-foreground">
-              Cossmos · Status
-            </p>
-          </div>
+          <p className="truncate text-base font-semibold leading-tight sm:text-lg">
+            {title}
+          </p>
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-2">
