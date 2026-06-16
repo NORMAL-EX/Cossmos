@@ -23,6 +23,8 @@ export interface Service {
   uptime: number;
   lastChecked: string;
   message?: string;
+  /** TLS certificate expiry (ISO), present for reachable HTTPS endpoints. */
+  certExpiry?: string;
   history: CheckPoint[];
 }
 

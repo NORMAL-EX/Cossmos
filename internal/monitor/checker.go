@@ -19,6 +19,7 @@ type Result struct {
 	Status     model.Status
 	ResponseMS int64
 	Message    string
+	CertExpiry *time.Time // TLS leaf certificate NotAfter (HTTPS only)
 }
 
 // Check probes one service and returns its current status. It never returns an
@@ -71,6 +72,13 @@ func checkHTTP(ctx context.Context, svc *config.Service) Result {
 	}
 	defer resp.Body.Close()
 
+	// Capture the TLS leaf certificate expiry for HTTPS endpoints.
+	var certExpiry *time.Time
+	if resp.TLS != nil && len(resp.TLS.PeerCertificates) > 0 {
+		exp := resp.TLS.PeerCertificates[0].NotAfter
+		certExpiry = &exp
+	}
+
 	body, keyword := "", svc.Keyword
 	if keyword != "" {
 		// Read a bounded amount so a huge body cannot exhaust memory.
@@ -85,6 +93,7 @@ func checkHTTP(ctx context.Context, svc *config.Service) Result {
 			Status:     model.StatusDown,
 			ResponseMS: elapsed,
 			Message:    fmt.Sprintf("unexpected status %d", resp.StatusCode),
+			CertExpiry: certExpiry,
 		}
 	}
 	if keyword != "" && !strings.Contains(body, keyword) {
@@ -92,6 +101,7 @@ func checkHTTP(ctx context.Context, svc *config.Service) Result {
 			Status:     model.StatusDown,
 			ResponseMS: elapsed,
 			Message:    "keyword not found in body",
+			CertExpiry: certExpiry,
 		}
 	}
 	if elapsed >= int64(svc.DegradedMs) {
@@ -99,9 +109,15 @@ func checkHTTP(ctx context.Context, svc *config.Service) Result {
 			Status:     model.StatusDegraded,
 			ResponseMS: elapsed,
 			Message:    fmt.Sprintf("slow response %dms", elapsed),
+			CertExpiry: certExpiry,
 		}
 	}
-	return Result{Status: model.StatusUp, ResponseMS: elapsed, Message: fmt.Sprintf("HTTP %d", resp.StatusCode)}
+	return Result{
+		Status:     model.StatusUp,
+		ResponseMS: elapsed,
+		Message:    fmt.Sprintf("HTTP %d", resp.StatusCode),
+		CertExpiry: certExpiry,
+	}
 }
 
 func checkTCP(ctx context.Context, svc *config.Service) Result {

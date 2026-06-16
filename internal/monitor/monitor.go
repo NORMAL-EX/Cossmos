@@ -110,6 +110,7 @@ func (m *Monitor) buildSnapshot(now time.Time, results []Result) *model.Snapshot
 			Uptime:      round1(uptime),
 			LastChecked: now,
 			Message:     res.Message,
+			CertExpiry:  res.CertExpiry,
 			History:     m.store.History(id),
 		})
 

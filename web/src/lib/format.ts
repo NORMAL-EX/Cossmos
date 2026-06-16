@@ -27,6 +27,24 @@ export function formatDateTime(iso: string, lang: Lang): string {
   });
 }
 
+/** formatDate renders a locale-aware date (no time). */
+export function formatDate(iso: string, lang: Lang): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString(lang === "zh" ? "zh-CN" : "en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
+/** certDaysLeft returns whole days until the given timestamp (negative if past). */
+export function certDaysLeft(iso: string): number {
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return 0;
+  return Math.ceil((t - Date.now()) / 86_400_000);
+}
+
 /** relativeTime renders a short "x ago" string in the active language. */
 export function relativeTime(iso: string, lang: Lang): string {
   const d = new Date(iso).getTime();

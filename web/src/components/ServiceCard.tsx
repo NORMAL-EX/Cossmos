@@ -1,13 +1,44 @@
-import { Activity, Gauge, Info } from "lucide-react";
+import { Activity, Gauge, Info, ShieldCheck } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { StatusDot } from "./StatusDot";
 import { UptimeBars } from "./UptimeBars";
 import { useI18n } from "@/contexts/i18n";
-import { formatMs, formatPercent } from "@/lib/format";
+import { certDaysLeft, formatDate, formatMs, formatPercent } from "@/lib/format";
 import { statusMeta } from "@/lib/status";
 import type { Service } from "@/lib/types";
+import { cn } from "@/lib/utils";
+
+/** TLS certificate expiry line, colour-coded by how soon it expires. */
+function CertLine({ expiry }: { expiry: string }) {
+  const { t, lang } = useI18n();
+  const days = certDaysLeft(expiry);
+  const expired = days < 0;
+  const tone =
+    expired || days <= 7
+      ? "text-destructive-foreground"
+      : days <= 30
+        ? "text-warning-foreground"
+        : "text-success-foreground";
+  const daysText = expired
+    ? t("cert.expired")
+    : days === 0
+      ? t("cert.expiresToday")
+      : t("cert.expiresIn", { n: days });
+
+  return (
+    <div
+      className="flex items-center gap-1.5 border-t border-border/60 pt-3 text-xs text-muted-foreground"
+      title={t("cert.validUntil", { date: formatDate(expiry, lang) })}
+    >
+      <ShieldCheck className="size-3.5 shrink-0" />
+      <span>{t("cert.label")}</span>
+      <span className="tabular-nums text-foreground">{formatDate(expiry, lang)}</span>
+      <span className={cn("ml-auto font-medium tabular-nums", tone)}>{daysText}</span>
+    </div>
+  );
+}
 
 export function ServiceCard({ service }: { service: Service }) {
   const { t } = useI18n();
@@ -63,6 +94,8 @@ export function ServiceCard({ service }: { service: Service }) {
             </b>
           </span>
         </div>
+
+        {service.certExpiry && <CertLine expiry={service.certExpiry} />}
       </div>
     </Card>
   );

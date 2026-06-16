@@ -35,6 +35,7 @@ type Service struct {
 	Uptime      float64      `json:"uptime"` // percentage (0-100) over the kept history window
 	LastChecked time.Time    `json:"lastChecked"`
 	Message     string       `json:"message,omitempty"`
+	CertExpiry  *time.Time   `json:"certExpiry,omitempty"` // TLS certificate expiry (HTTPS only)
 	History     []CheckPoint `json:"history"`
 }
 
