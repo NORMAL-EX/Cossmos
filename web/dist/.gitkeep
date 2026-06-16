@@ -1,0 +1,2 @@
+# This file ensures the dist/ directory exists so `go:embed all:dist` compiles
+# even before the frontend has been built. The Vite build populates this folder.
