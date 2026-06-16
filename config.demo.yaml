@@ -1,53 +1,94 @@
-# Cloud-PE 服务状态检测配置
-# 由 GitHub Actions 定时以 `once` 模式运行并发布到 GitHub Pages；同时是
-# Docker 镜像内置的默认配置（COSSMOS_CONFIG=/app/config.yaml）。
-# Default config baked into the Docker image and used by the Pages demo.
+# 演示配置 / demo configuration
+# 由 GitHub Actions 定时以 `once` 模式运行，结果发布到 GitHub Pages。
+# Run on a schedule by GitHub Actions in `once` mode; published to GitHub Pages.
+# 这里监控一组公开、稳定的站点用于展示。/ Monitors public, stable sites for the demo.
 
 site:
-  title: "Cloud-PE 服务状态检测"
-  description: "这里是 Cloud-PE 项目的服务状态检测页面"
-  github: "https://github.com/Cloud-PE"
-  refreshInterval: 60
-  icp: "鲁ICP备2023028944号-3"
+  title: "Cossmos 演示 · Status Demo"
+  description: "使用 COSS UI 构建的服务状态监测器 · 每 10 分钟由 GitHub Actions 刷新"
+  github: "https://github.com/NORMAL-EX/Cossmos"
+  refreshInterval: 600
+  # 演示用占位备案号（请替换为你自己的）/ placeholder filing numbers (replace with your own)
+  icp: "京ICP备00000000号-1"
   icpLink: "https://beian.miit.gov.cn/"
-  footer: "© Cloud-PE Dev."
+  policeIcp: "京公网安备 11000000000000号"
+  policeIcpLink: "https://beian.mps.gov.cn/"
+  footer: "Demo only · 仅供演示"
 
 monitor:
-  interval: 60        # serve 模式两轮检查间隔（秒）
+  interval: 600
   timeout: 12
   historySize: 90
-  concurrency: 6
+  concurrency: 8
 
 server:
   listen: ":8080"
 
 services:
-  - name: "Cloud-PE 官方网站"
+  - name: "GitHub"
+    group: "开发者服务 / Dev"
+    description: "github.com"
     type: http
-    url: "https://www.cloud-pe.cn"
-    expectStatus: [200, 301, 302]
+    url: "https://github.com"
+    expectStatus: [200]
+    degradedMs: 1500
+
+  - name: "GitHub API"
+    group: "开发者服务 / Dev"
+    type: http
+    url: "https://api.github.com"
+    expectStatus: [200]
+    keyword: "current_user_url"
+    degradedMs: 1500
+
+  - name: "npm Registry"
+    group: "开发者服务 / Dev"
+    type: http
+    url: "https://registry.npmjs.org/-/ping"
+    expectStatus: [200]
+    degradedMs: 1500
+
+  - name: "Go Proxy"
+    group: "开发者服务 / Dev"
+    type: http
+    url: "https://proxy.golang.org/"
+    expectStatus: [200, 404]
+    degradedMs: 1500
+
+  - name: "Cloudflare"
+    group: "基础设施 / Infra"
+    description: "cloudflare.com"
+    type: http
+    url: "https://www.cloudflare.com"
+    expectStatus: [200]
+    degradedMs: 1200
+
+  - name: "Cloudflare DNS"
+    group: "基础设施 / Infra"
+    description: "1.1.1.1:443"
+    type: tcp
+    host: "1.1.1.1"
+    port: 443
+    degradedMs: 600
+
+  - name: "Google DNS"
+    group: "基础设施 / Infra"
+    description: "8.8.8.8:53"
+    type: tcp
+    host: "8.8.8.8"
+    port: 53
+    degradedMs: 600
+
+  - name: "Wikipedia"
+    group: "内容 / Content"
+    type: http
+    url: "https://www.wikipedia.org"
+    expectStatus: [200]
     degradedMs: 2000
 
-  - name: "Cloud-PE 文件下载站"
+  - name: "MDN Web Docs"
+    group: "内容 / Content"
     type: http
-    url: "https://files.cloud-pe.cn"
-    expectStatus: [200, 301, 302, 403]
-    degradedMs: 2500
-
-  - name: "Cloud-PE Docs"
-    type: http
-    url: "https://docs.cloud-pe.cn"
-    expectStatus: [200, 301, 302]
-    degradedMs: 2000
-
-  - name: "Cloud-PE API接口"
-    type: http
-    url: "https://api.cloud-pe.cn"
-    expectStatus: [200, 301, 302, 401, 403, 404]
-    degradedMs: 2000
-
-  - name: "Cloud-PE 云盘"
-    type: http
-    url: "https://pan.sysre.cn"
-    expectStatus: [200, 301, 302]
+    url: "https://developer.mozilla.org/en-US/"
+    expectStatus: [200]
     degradedMs: 2500
