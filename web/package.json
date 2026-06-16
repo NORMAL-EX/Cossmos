@@ -6,7 +6,7 @@
   "description": "Cossmos status monitor frontend — COSS UI + Tailwind CSS v4 + React",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node -e \"require('fs').writeFileSync('dist/.gitkeep','')\"",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview"
