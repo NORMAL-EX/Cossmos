@@ -2,6 +2,8 @@ name: Demo (GitHub Pages)
 
 # Runs the monitor in one-shot mode on a schedule, regenerates status.json and
 # publishes the static dashboard to GitHub Pages. No server is started.
+#
+# One-time setup: enable Pages with Settings -> Pages -> Source: "GitHub Actions".
 on:
   schedule:
     - cron: "*/15 * * * *" # every 15 minutes (GitHub may throttle shorter intervals)
