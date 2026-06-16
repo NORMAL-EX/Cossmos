@@ -159,7 +159,7 @@ make lint                               # go vet + eslint
 
 ## 🙏 致谢 / Acknowledgements
 
-前端使用 **[COSS UI](https://coss.com/ui)**(基于 [Base UI](https://base-ui.com),MIT),组件接入与「深浅色切换 / 弹出菜单」交互参考 **[Cloud-PE-Website](https://github.com/Cloud-PE/Cloud-PE-Website)**(MIT)。详见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+前端使用 **[COSS UI](https://coss.com/ui)**(基于 [Base UI](https://base-ui.com) 的开源 React 组件库,MIT)。详见 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
 ## 📄 许可证
 
