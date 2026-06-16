@@ -1,13 +1,15 @@
-import type { BadgeProps } from "@/components/ui/badge";
 import type { Status } from "./types";
+
+/** Badge variants exposed by the vendored COSS UI badge component. */
+type BadgeVariant = "success" | "warning" | "destructive" | "secondary";
 
 export interface StatusMeta {
   /** i18n key under status.* */
   labelKey: string;
   /** solid background utility for dots/bars */
   dot: string;
-  /** Badge variant for this status */
-  badge: NonNullable<BadgeProps["variant"]>;
+  /** COSS UI badge variant for this status */
+  badge: BadgeVariant;
   /** CSS color used for the pulsing halo */
   ring: string;
 }
@@ -34,7 +36,7 @@ export const statusMeta: Record<Status, StatusMeta> = {
   pending: {
     labelKey: "status.pending",
     dot: "bg-muted-foreground",
-    badge: "muted",
+    badge: "secondary",
     ring: "var(--muted-foreground)",
   },
 };

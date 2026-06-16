@@ -6,7 +6,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useI18n } from "@/contexts/i18n";
 import { relativeTime } from "@/lib/format";
@@ -82,15 +82,20 @@ export function StatusHero({ snapshot, refreshing, onReload }: StatusHeroProps) 
 
         <Tooltip>
           <TooltipTrigger
-            onClick={onReload}
-            aria-label={t("action.refresh")}
-            className={cn(
-              buttonVariants({ variant: "outline", size: "icon" }),
-              "shrink-0 bg-background/60",
-            )}
-          >
-            <RefreshCw className={cn("size-4", refreshing && "animate-spin")} />
-          </TooltipTrigger>
+            render={
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onReload}
+                aria-label={t("action.refresh")}
+                className="button-header shrink-0 rounded-lg"
+              >
+                <RefreshCw
+                  className={cn("size-4", refreshing && "animate-spin")}
+                />
+              </Button>
+            }
+          />
           <TooltipContent>{t("action.refresh")}</TooltipContent>
         </Tooltip>
       </div>

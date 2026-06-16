@@ -215,6 +215,12 @@ make docker    # 构建镜像
 
 页脚的 ICP 备案号与公安备案号通过配置 `site.icp` / `site.policeIcp`（及对应链接）展示，留空则不显示。请填写你自己合法的备案信息。
 
+## 🙏 致谢 / Acknowledgements
+
+前端使用 **[COSS UI](https://coss.com/ui)**(基于 [Base UI](https://base-ui.com) 的开源 React 组件库,MIT),组件接入方式与「深浅色切换按钮 / 弹出菜单」的交互参考了 **[Cloud-PE-Website](https://github.com/Cloud-PE/Cloud-PE-Website)**(MIT)。详见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+
+`web/src/components/ui/` 下的 COSS UI 组件与 `CircleHalf` 图标均来自上述开源项目,许可证声明已一并保留。
+
 ## 📄 许可证
 
 [MIT](LICENSE) © NORMAL-EX
